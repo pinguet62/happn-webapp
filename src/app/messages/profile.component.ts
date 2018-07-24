@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {HappnService, User} from './happn.service';
+import {HappnService, User} from '../happn.service';
 
 @Component({
   selector: 'app-profile',

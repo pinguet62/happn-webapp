@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {Conversation, HappnService, User} from './happn.service';
-import {CurrentUserService} from './currentUser.service';
+import {Conversation, HappnService, User} from '../happn.service';
+import {CurrentUserService} from '../login/currentUser.service';
 
 @Component({
   selector: 'app-contacts',
@@ -32,7 +32,7 @@ export class ContactsComponent {
           user: conversation.participants.filter(p => p.user.id !== this.currentUser.userId)[0].user
         }));
         // TODO remove tmp local test
-        this.selected.emit(conversations[1]);
+        this.selected.emit(conversations[2]);
       });
   }
 

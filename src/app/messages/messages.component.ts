@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Conversation, HappnService, Message} from './happn.service';
-import {CurrentUserService} from './currentUser.service';
+import {Conversation, HappnService, Message} from '../happn.service';
+import {CurrentUserService} from '../login/currentUser.service';
 
 @Component({
   selector: 'app-messages',

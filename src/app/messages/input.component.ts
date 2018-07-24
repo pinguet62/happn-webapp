@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Conversation, HappnService} from './happn.service';
+import {Conversation, HappnService} from '../happn.service';
 
 @Component({
   selector: 'app-input',
