@@ -8,25 +8,33 @@ import {ProfileComponent} from './profile.component';
 import {HappnService} from './happn.service';
 import {CurrentUserService} from './currentUser.service';
 import {HttpClientModule} from '@angular/common/http';
-import {MatListModule} from '@angular/material';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatListModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ParseIsoDatePipe} from './parseDate.pipe';
+import {InputComponent} from './input.component';
+import {ConversationComponent} from './conversation.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     FlexLayoutModule,
-    MatListModule,
+    MatListModule, MatInputModule, MatButtonModule, MatFormFieldModule,
     NgbModule.forRoot(),
   ],
   declarations: [
     AppComponent,
     ParseIsoDatePipe,
     ContactsComponent,
+    ConversationComponent,
     MessagesComponent,
     MessageComponent,
+    InputComponent,
     ProfileComponent,
   ],
   providers: [

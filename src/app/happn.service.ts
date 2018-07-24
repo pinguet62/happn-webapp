@@ -69,4 +69,8 @@ export class HappnService {
       .pipe(map(res => res.data));
   }
 
+  sendMessage(conversation: Conversation, text: string): Observable<any> {
+    throw Error('Not yet implemented');
+  }
+
 }

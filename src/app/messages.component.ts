@@ -25,7 +25,7 @@ export class MessagesComponent {
     if (!value) {
       this.messages = null;
     } else {
-      this.happnService.getMessages(value.id).subscribe(messages => console.log(this.messages = messages));
+      this.happnService.getMessages(value.id).subscribe(messages => this.messages = messages);
     }
   }
 
