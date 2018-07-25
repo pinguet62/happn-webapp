@@ -8,15 +8,27 @@ interface Wrapped<T> {
   data: T;
 }
 
+interface Profile {
+  url: string;
+}
+
+export interface NearYouNotification {
+  id: string;
+  notifier: {
+    my_relation: 0 | 1 | 4; // 0 = new relation, 1 = accepted by me but not (yet) by target, 4 = matched
+    is_accepted: boolean; // if target user accepted my profile
+    first_name: string;
+    profiles: Profile[];
+  };
+}
+
 export interface User {
   id: string;
   first_name: string;
   // full
   fb_id: string;
   age: number;
-  profiles: Array<{
-    url: string;
-  }>;
+  profiles: Profile[];
 }
 
 export interface Conversation {
@@ -44,6 +56,13 @@ export class HappnService {
     private http: HttpClient,
     private currentUser: CurrentUserService,
   ) {
+  }
+
+  getTimeline(): Observable<NearYouNotification[]> {
+    return this.http.get<Wrapped<NearYouNotification[]>>(
+      HappnService.URL + '/api/users/me/notifications?types=468&fields=id,is_pushed,lon,actions,creation_date,is_notified,lat,modification_date,notification_type,nb_times,notifier.fields(id,job,is_accepted,workplace,my_relation,distance,gender,my_conversation,is_charmed,nb_photos,last_name,first_name,age,profiles),notified.fields(is_accepted,is_charmed)',
+      {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
+      .pipe(map(res => res.data));
   }
 
   getConversations(): Observable<Conversation[]> {

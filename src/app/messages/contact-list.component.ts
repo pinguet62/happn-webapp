@@ -3,7 +3,7 @@ import {Conversation, HappnService, User} from '../happn.service';
 import {CurrentUserService} from '../login/currentUser.service';
 
 @Component({
-  selector: 'app-contacts',
+  selector: 'app-contact-list',
   template: `
     <mat-list>
       <mat-list-item *ngFor="let entry of userByConversation" (click)="selected.emit(entry.conversation)">
@@ -14,7 +14,7 @@ import {CurrentUserService} from '../login/currentUser.service';
     </mat-list>
   `
 })
-export class ContactsComponent {
+export class ContactListComponent {
 
   userByConversation: { conversation: Conversation, user: User }[];
 
@@ -32,7 +32,7 @@ export class ContactsComponent {
           user: conversation.participants.filter(p => p.user.id !== this.currentUser.userId)[0].user
         }));
         // TODO remove tmp local test
-        this.selected.emit(conversations[2]);
+        this.selected.emit(conversations[0]);
       });
   }
 

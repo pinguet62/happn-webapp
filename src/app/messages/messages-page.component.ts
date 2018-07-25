@@ -4,9 +4,8 @@ import {Conversation} from '../happn.service';
 @Component({
   template: `
     <div fxLayout="row" class="scroll-children">
-      <app-contacts (selected)="conversation = $event" fxFlex="30"></app-contacts>
-      <app-conversation [conversation]="conversation" fxFlex="50"></app-conversation>
-      <app-profile [user]="conversation?.participants[1].user" fxFlex="20"></app-profile>
+      <app-contact-list (selected)="conversation = $event" fxFlex="35"></app-contact-list>
+      <app-conversation [conversation]="conversation" fxFlex="65"></app-conversation>
     </div>
   `,
   styles: [`
@@ -15,7 +14,7 @@ import {Conversation} from '../happn.service';
     }
 
     .scroll-children > * {
-      overflow: auto;
+      /*overflow: auto;*/
     }
   `]
 })

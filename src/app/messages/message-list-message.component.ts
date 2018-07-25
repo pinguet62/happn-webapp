@@ -2,8 +2,9 @@ import {Component, Input} from '@angular/core';
 
 // http://nicolasgallagher.com/pure-css-speech-bubbles/demo
 // https://leaverou.github.io/bubbly
+
 @Component({
-  selector: 'app-message',
+  selector: 'app-message-list-message',
   template: `
     <div
       class="message"
@@ -25,13 +26,6 @@ import {Component, Input} from '@angular/core';
     .date-bubble {
       margin-left: 30px;
       margin-right: 30px;
-    }
-
-    .avatar {
-      flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
     }
 
     .sent .date {
@@ -68,7 +62,7 @@ import {Component, Input} from '@angular/core';
     }
   `]
 })
-export class MessageComponent {
+export class MessageListMessageComponent {
 
   @Input()
   avatar: string;

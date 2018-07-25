@@ -1,14 +1,22 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
-import {ContactsComponent} from './messages/contacts.component';
-import {MessageComponent} from './messages/message.component';
-import {MessagesComponent} from './messages/messages.component';
-import {ProfileComponent} from './messages/profile.component';
+import {ContactListComponent} from './messages/contact-list.component';
+import {MessageListMessageComponent} from './messages/message-list-message.component';
+import {MessageListComponent} from './messages/message-list.component';
+import {ProfileComponent} from './profile/profile.component';
 import {HappnService} from './happn.service';
 import {CurrentUserService} from './login/currentUser.service';
 import {HttpClientModule} from '@angular/common/http';
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatListModule} from '@angular/material';
+import {
+  MatButtonModule, MatCardModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSidenavModule,
+  MatToolbarModule
+} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ParseIsoDatePipe} from './shared/parseDate.pipe';
@@ -24,6 +32,8 @@ import {LoginPageComponent} from './login/login-page.component';
 import {TimelinePageComponent} from './timeline/timeline-page.component';
 import {MessagesPageComponent} from './messages/messages-page.component';
 import {LoginGuard} from './login/login.guard';
+import {LayoutComponent} from './layout.component';
+import {MessageListHeaderComponent} from './messages/message-list-header.component';
 
 @NgModule({
   imports: [
@@ -33,7 +43,7 @@ import {LoginGuard} from './login/login.guard';
     FormsModule,
     FlexLayoutModule,
     // lib
-    MatListModule, MatInputModule, MatButtonModule, MatFormFieldModule,
+    MatListModule, MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule,
     NgbModule.forRoot(),
     // app
     RouterModule.forRoot(routes),
@@ -42,14 +52,16 @@ import {LoginGuard} from './login/login.guard';
     RouterOutletComponent,
     AppComponent,
     IndexComponent,
+    LayoutComponent,
     ParseIsoDatePipe,
     LoginPageComponent,
     TimelinePageComponent,
     MessagesPageComponent,
-    ContactsComponent,
+    ContactListComponent,
     ConversationComponent,
-    MessagesComponent,
-    MessageComponent,
+    MessageListComponent,
+    MessageListHeaderComponent,
+    MessageListMessageComponent,
     InputComponent,
     ProfileComponent,
   ],

@@ -4,7 +4,7 @@ import {Conversation} from '../happn.service';
 @Component({
   selector: 'app-conversation',
   template: `
-    <app-messages [conversation]="conversation"></app-messages>
+    <app-message-list [conversation]="conversation"></app-message-list>
     <app-input></app-input>
   `,
   styles: [`
@@ -18,7 +18,7 @@ import {Conversation} from '../happn.service';
       flex: 0 0 0%; /* height = content size */
     }
 
-    app-messages {
+    app-message-list {
       flex: 1; /* height = free space */
       overflow: auto;
     }
