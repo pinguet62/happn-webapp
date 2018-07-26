@@ -9,7 +9,8 @@ import {HappnService} from './happn.service';
 import {CurrentUserService} from './login/currentUser.service';
 import {HttpClientModule} from '@angular/common/http';
 import {
-  MatButtonModule, MatCardModule,
+  MatButtonModule,
+  MatCardModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -34,6 +35,7 @@ import {MessagesPageComponent} from './messages/messages-page.component';
 import {LoginGuard} from './login/login.guard';
 import {LayoutComponent} from './layout.component';
 import {MessageListHeaderComponent} from './messages/message-list-header.component';
+import {LoginService} from './login/login.service';
 
 @NgModule({
   imports: [
@@ -67,6 +69,7 @@ import {MessageListHeaderComponent} from './messages/message-list-header.compone
   ],
   providers: [
     CurrentUserService,
+    LoginService,
     HappnService,
     LoginGuard,
   ],
