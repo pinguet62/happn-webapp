@@ -33,6 +33,13 @@ import {ObservableMedia} from '@angular/flex-layout';
             <mat-icon mat-list-icon>message</mat-icon>
             <span mat-line>Messages</span>
           </mat-list-item>
+
+          <mat-list-item
+            routerLink="/me" (click)="media.isActive('gt-sm') ? null : sidenav.close()"
+            routerLinkActive="menu-selected">
+            <mat-icon mat-list-icon>person</mat-icon>
+            <span mat-line>My profile</span>
+          </mat-list-item>
         </mat-nav-list>
       </mat-sidenav>
 

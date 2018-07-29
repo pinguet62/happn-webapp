@@ -8,26 +8,37 @@ interface Wrapped<T> {
   data: T;
 }
 
-interface Profile {
+export interface Profile {
   url: string;
 }
 
 export interface NearYouNotification {
   id: string;
-  notifier: {
-    my_relation: 0 | 1 | 4; // 0 = new relation, 1 = accepted by me but not (yet) by target, 4 = matched
-    is_accepted: boolean; // if target user accepted my profile
-    first_name: string;
-    profiles: Profile[];
-  };
+  notifier: User;
+}
+
+export enum Relation {
+  NEW_RELATION = 0, // new relation
+  ACCEPTED = 1, // accepted by me but not (yet) by target
+  MATCHED = 4 // matched
 }
 
 export interface User {
   id: string;
   first_name: string;
   // full
-  fb_id: string;
+  about: string | '';
+  job: string | '' | null;
+  is_accepted: boolean; // if target user accepted my profile
+  workplace: string | '' | null;
+  school: string | '';
   age: number;
+  modification_date: string; // ISO 8601
+  last_meet_position: {
+    lat: number;
+    lon: number;
+  };
+  my_relation: Relation;
   profiles: Profile[];
 }
 
@@ -47,6 +58,21 @@ export interface Message {
   sender: User;
 }
 
+export interface Accepted {
+  has_crushed: boolean;
+}
+
+export type Rejected = void;
+
+export interface Device {
+  id: string;
+  position: {
+    latitude: number;
+    longitude: number;
+    alt: number;
+  };
+}
+
 @Injectable()
 export class HappnService {
 
@@ -60,7 +86,23 @@ export class HappnService {
 
   getTimeline(): Observable<NearYouNotification[]> {
     return this.http.get<Wrapped<NearYouNotification[]>>(
-      HappnService.URL + '/api/users/me/notifications?types=468&fields=id,is_pushed,lon,actions,creation_date,is_notified,lat,modification_date,notification_type,nb_times,notifier.fields(id,job,is_accepted,workplace,my_relation,distance,gender,my_conversation,is_charmed,nb_photos,last_name,first_name,age,profiles),notified.fields(is_accepted,is_charmed)',
+      HappnService.URL + '/api/users/me/notifications?limit=99999&types=468&fields=id,is_pushed,lon,actions,creation_date,is_notified,lat,modification_date,notification_type,nb_times,notifier.fields(id,job,is_accepted,workplace,my_relation,distance,gender,my_conversation,is_charmed,nb_photos,last_name,first_name,age,profiles),notified.fields(is_accepted,is_charmed)',
+      {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
+      .pipe(map(res => res.data));
+  }
+
+  acceptProfile(userId: string): Observable<Accepted> {
+    return this.http.post<Wrapped<Accepted>>(
+      HappnService.URL + `/api/users/me/accepted/${userId}`,
+      null,
+      {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
+      .pipe(map(res => res.data));
+  }
+
+  rejectProfile(userId: string): Observable<Rejected> {
+    return this.http.post<Wrapped<Rejected>>(
+      HappnService.URL + `/api/users/me/rejected/${userId}`,
+      null,
       {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
       .pipe(map(res => res.data));
   }
@@ -80,10 +122,27 @@ export class HappnService {
       .pipe(map(res => res.data));
   }
 
+  getDevices(): Observable<Device[]> {
+    return this.http.get<Wrapped<Device[]>>(
+      // login
+      HappnService.URL + `/api/users/me/devices`,
+      {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
+      .pipe(map(res => res.data));
+  }
+
+  setPosition(deviceId: string, position: { latitude: number, longitude: number }): Observable<Device> {
+    return this.http.put<Wrapped<Device>>(
+      // login
+      HappnService.URL + `/api/users/${this.currentUser.userId}/devices/${deviceId}`,
+      {latitude: position.latitude, longitude: position.longitude, alt: 20}, // TODO check "alt"
+      {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
+      .pipe(map(res => res.data));
+  }
+
   getMessages(conversationId: string): Observable<Message[]> {
     return this.http.get<Wrapped<Message[]>>(
       // login
-      HappnService.URL + `/api/conversations/${conversationId}/messages?fields=id,message,creation_date,sender.fields(id,profiles)`,
+      HappnService.URL + `/api/conversations/${conversationId}/messages?limit=99999&fields=id,message,creation_date,sender.fields(id,profiles)`,
       {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
       .pipe(map(res => res.data));
   }

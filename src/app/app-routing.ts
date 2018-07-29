@@ -6,6 +6,7 @@ import {MessagesPageComponent} from './messages/messages-page.component';
 import {LoginPageComponent} from './login/login-page.component';
 import {LayoutComponent} from './layout.component';
 import {ProfileComponent} from './profile/profile.component';
+import {MeComponent} from './me/me.component';
 
 export const routes: Routes = [
   {path: '', component: IndexComponent},
@@ -15,6 +16,7 @@ export const routes: Routes = [
       {path: 'timeline', component: TimelinePageComponent},
       {path: 'messages', component: MessagesPageComponent},
       {path: 'profile/:id', component: ProfileComponent},
+      {path: 'me', component: MeComponent},
     ]
   },
 ];

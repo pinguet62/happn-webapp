@@ -37,6 +37,7 @@ import {LayoutComponent} from './layout.component';
 import {MessageListHeaderComponent} from './messages/message-list-header.component';
 import {LoginService} from './login/login.service';
 import {GoogleMapsComponent} from './profile/google-maps.component';
+import {MeComponent} from './me/me.component';
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import {GoogleMapsComponent} from './profile/google-maps.component';
     InputComponent,
     ProfileComponent,
     GoogleMapsComponent,
+    MeComponent,
   ],
   providers: [
     CurrentUserService,

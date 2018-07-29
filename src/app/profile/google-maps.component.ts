@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 // noinspection ES6UnusedImports
 import {} from '@types/googlemaps';
 import Circle = google.maps.Circle;
@@ -7,39 +7,65 @@ import Map = google.maps.Map;
 import MapOptions = google.maps.MapOptions;
 import MapTypeId = google.maps.MapTypeId;
 import Marker = google.maps.Marker;
+import event = google.maps.event;
 
 // https://developers.google.com/maps/documentation/javascript/tutorial
 
+export interface MapClickEvent {
+  ka: { x: number; y: number; };
+  latLng: google.maps.LatLng;
+  pixel: { x: number; y: number; };
+  va: MouseEvent;
+}
+
 @Component({
   selector: 'app-google-maps',
-  template: `
-    <div #gmap style="height: 100%; width: 100%;"></div>
-  `
+  template: ``
 })
 export class GoogleMapsComponent implements OnInit {
 
   @Input() latitude: number;
   @Input() longitude: number;
 
-  // @ViewChild('gmap')
-  gmapElement: ElementRef;
+  @Output() longClick: EventEmitter<MapClickEvent> = new EventEmitter<MapClickEvent>();
 
   map: Map;
 
   constructor(private elementRef: ElementRef) {
-    this.gmapElement = this.elementRef;
   }
 
   ngOnInit() {
+    this.init();
+    this.detectLongClick();
+  }
+
+  private init() {
     const position = new LatLng(this.latitude, this.longitude);
     const mapOptions: MapOptions = {
       center: position,
       zoom: 15,
       mapTypeId: MapTypeId.ROADMAP
     };
-    this.map = new Map(this.gmapElement.nativeElement, mapOptions);
+    this.map = new Map(this.elementRef.nativeElement, mapOptions);
     new Marker({map: this.map, position});
     new Circle({map: this.map, center: position, radius: 250/*m*/});
+  }
+
+  private detectLongClick(timeout: number = 500) {
+    let longpress = false;
+    event.addListener(this.map, 'click', (e: MapClickEvent) => {
+      if (longpress) {
+        this.longClick.emit(e);
+      }
+    });
+    let start: number;
+    event.addListener(this.map, 'mousedown', () => {
+      start = Date.now();
+    });
+    event.addListener(this.map, 'mouseup', () => {
+      const end = Date.now();
+      longpress = (end - start > timeout);
+    });
   }
 
 }
