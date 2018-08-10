@@ -52,19 +52,17 @@ export class GoogleMapsComponent implements OnInit {
   }
 
   private detectLongClick(timeout: number = 500) {
-    let longpress = false;
-    event.addListener(this.map, 'click', (e: MapClickEvent) => {
-      if (longpress) {
-        this.longClick.emit(e);
-      }
-    });
-    let start: number;
-    event.addListener(this.map, 'mousedown', () => {
-      start = Date.now();
+    let mousePressed = false;
+    event.addListener(this.map, 'mousedown', (evt: MapClickEvent) => {
+      mousePressed = true;
+      setTimeout(() => {
+        if (mousePressed) {
+          this.longClick.emit(evt);
+        }
+      }, timeout);
     });
     event.addListener(this.map, 'mouseup', () => {
-      const end = Date.now();
-      longpress = (end - start > timeout);
+      mousePressed = false;
     });
   }
 

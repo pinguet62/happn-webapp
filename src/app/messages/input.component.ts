@@ -24,8 +24,10 @@ export class InputComponent {
   }
 
   sendMessage() {
-    this.happnService.sendMessage(this.conversation, this.text).subscribe(() =>
-      this.text = ''
+    this.happnService.sendMessage(this.conversation, this.text).subscribe(message => {
+        this.text = '';
+        this.conversation.messages.push(message); // TODO emit(message)
+      }
     );
   }
 

@@ -33,9 +33,11 @@ export class MeComponent {
   }
 
   private refreshDevice() {
-    this.happnService.getDevices().subscribe(it =>
-      this.device = it[0] // TODO solution for multi-device?
-    );
+    this.happnService.getDevices().subscribe(it => {
+      if (it && it.length > 0) {
+        this.device = it[0]; // TODO solution for multi-device?
+      }
+    });
   }
 
   changeLocation(event: MapClickEvent) {

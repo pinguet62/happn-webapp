@@ -5,11 +5,11 @@ import {tap} from 'rxjs/operators';
 @Component({
   template: `
     <div fxLayout="row wrap">
-      <mat-card *ngFor="let notification of notifications" [routerLink]="['/profile', notification.notifier.id]">
-        <mat-card-header>
+      <mat-card *ngFor="let notification of notifications">
+        <mat-card-header [routerLink]="['/profile', notification.notifier.id]">
           <h3>{{notification.notifier.first_name}}</h3>
         </mat-card-header>
-        <img mat-card-image [src]="notification.notifier.profiles[0].url">
+        <img mat-card-image [src]="notification.notifier.profiles[0].url" [routerLink]="['/profile', notification.notifier.id]">
         <mat-card-actions>
           <button (click)="rejectProfile(notification.notifier)" mat-icon-button>
             <mat-icon>delete</mat-icon>

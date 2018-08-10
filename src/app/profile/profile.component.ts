@@ -23,7 +23,7 @@ import {ActivatedRoute} from '@angular/router';
           <p>Dernière activité : {{user.modification_date | parseIsoDate}}</p>
           <p>Distance : ???</p>
           <p>Description : {{user.about}}</p>
-          <app-google-maps [latitude]="user.last_meet_position.lat" [longitude]="user.last_meet_position.lon"></app-google-maps>
+          <app-google-maps *ngIf="user.last_meet_position" [latitude]="user.last_meet_position.lat" [longitude]="user.last_meet_position.lon"></app-google-maps>
         </div>
       </div>
     </ng-template>

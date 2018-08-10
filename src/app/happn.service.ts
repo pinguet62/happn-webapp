@@ -37,7 +37,7 @@ export interface User {
   last_meet_position: {
     lat: number;
     lon: number;
-  };
+  } | null;
   my_relation: Relation;
   profiles: Profile[];
 }
@@ -123,7 +123,7 @@ export class HappnService {
   }
 
   getDevices(): Observable<Device[]> {
-    return this.http.get<Wrapped<Device[]>>(
+    return this.http.get<Wrapped<Device[] | null>>(
       // login
       HappnService.URL + `/api/users/me/devices`,
       {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
@@ -147,8 +147,12 @@ export class HappnService {
       .pipe(map(res => res.data));
   }
 
-  sendMessage(conversation: Conversation, text: string): Observable<any> {
-    throw Error('Not yet implemented');
+  sendMessage(conversation: Conversation, message: string): Observable<Message> {
+    return this.http.post<Wrapped<Message>>(
+      HappnService.URL + `/api/conversations/${conversation.id}/messages&fields=id,message,creation_date,sender.fields(id,profiles)`,
+      {message},
+      {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
+      .pipe(map(res => res.data));
   }
 
 }
