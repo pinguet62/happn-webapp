@@ -66,7 +66,7 @@ export class LoginPageComponent {
   login() {
     this.loginService
       .login(this.token)
-      .pipe(tap(() => this.router.navigate(['/timeline'])))
+      .pipe(tap(() => this.router.navigate(['/'])))
       .subscribe();
   }
 

@@ -26,7 +26,6 @@ import {ConversationComponent} from './messages/conversation.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import {RouterOutletComponent} from './shared/router-outlet.component';
-import {IndexComponent} from './index.component';
 import {RouterModule} from '@angular/router';
 import {routes} from './app-routing';
 import {LoginPageComponent} from './login/login-page.component';
@@ -55,7 +54,6 @@ import {MeComponent} from './me/me.component';
   declarations: [
     RouterOutletComponent,
     AppComponent,
-    IndexComponent,
     LayoutComponent,
     ParseIsoDatePipe,
     LoginPageComponent,
