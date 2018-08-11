@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
@@ -6,6 +6,14 @@ import {CurrentUserService} from './login/currentUser.service';
 
 interface Wrapped<T> {
   data: T;
+}
+
+interface LoginResponse {
+  access_token: string;
+  expires_in: number;
+  user_id: string;
+  refresh_token: string;
+  // ...
 }
 
 export interface Profile {
@@ -82,6 +90,36 @@ export class HappnService {
     private http: HttpClient,
     private currentUser: CurrentUserService,
   ) {
+  }
+
+  newAuthToken(facebookToken: string): Observable<LoginResponse> {
+    const body = new HttpParams()
+      .set('client_id', 'FUE-idSEP-f7AqCyuMcPr2K-1iCIU_YlvK-M-im3c')
+      .set('client_secret', 'brGoHSwZsPjJ-lBk0HqEXVtb3UFu-y5l_JcOjD-Ekv')
+      .set('grant_type', 'assertion')
+      .set('assertion_type', 'facebook_access_token')
+      .set('assertion', facebookToken)
+      .set('scope', 'mobile_app');
+    return this.http.post<LoginResponse>(
+      'https://api.happn.fr/connect/oauth/token',
+      body.toString(),
+      {
+        headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
+      });
+  }
+
+  refreshAuthToken(refreshToken: string): Observable<LoginResponse> {
+    const body = new HttpParams()
+      .set('client_id', 'FUE-idSEP-f7AqCyuMcPr2K-1iCIU_YlvK-M-im3c')
+      .set('client_secret', 'brGoHSwZsPjJ-lBk0HqEXVtb3UFu-y5l_JcOjD-Ekv')
+      .set('grant_type', 'refresh_token')
+      .set('refresh_token', refreshToken);
+    return this.http.post<LoginResponse>(
+      'https://api.happn.fr/connect/oauth/token',
+      body.toString(),
+      {
+        headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
+      });
   }
 
   getTimeline(): Observable<NearYouNotification[]> {
