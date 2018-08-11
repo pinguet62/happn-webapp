@@ -13,8 +13,8 @@ import {Conversation} from '../happn.service';
       height: 100%;
     }
 
-    .scroll-children > * {
-      /*overflow: auto;*/
+    app-contact-list {
+      overflow: auto;
     }
   `]
 })
