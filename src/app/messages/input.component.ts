@@ -6,7 +6,7 @@ import {Conversation, HappnService} from '../happn.service';
   template: `
     <form (ngSubmit)="sendMessage()" fxLayout="row" fxLayoutAlign="start center">
       <mat-form-field fxFlex="0">
-        <input [(value)]="text" matInput placeholder="Your message...">
+        <input [(ngModel)]="text" name="text" matInput placeholder="Your message...">
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary">Send</button>

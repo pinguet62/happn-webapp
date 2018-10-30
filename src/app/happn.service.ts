@@ -187,7 +187,7 @@ export class HappnService {
 
   sendMessage(conversation: Conversation, message: string): Observable<Message> {
     return this.http.post<Wrapped<Message>>(
-      HappnService.URL + `/api/conversations/${conversation.id}/messages&fields=id,message,creation_date,sender.fields(id,profiles)`,
+      HappnService.URL + `/api/conversations/${conversation.id}/messages`,
       {message},
       {headers: {Authorization: `OAuth="${this.currentUser.accessToken}"`}})
       .pipe(map(res => res.data));

@@ -5,7 +5,7 @@ import {Conversation} from '../happn.service';
   selector: 'app-conversation',
   template: `
     <app-message-list [conversation]="conversation"></app-message-list>
-    <app-input></app-input>
+    <app-input [conversation]="conversation"></app-input>
   `,
   styles: [`
     :host {
