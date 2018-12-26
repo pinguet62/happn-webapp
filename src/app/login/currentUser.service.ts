@@ -5,16 +5,24 @@ import {LocalStorage} from '../localStorageProxy';
 @Injectable()
 export class CurrentUserService {
 
-  @LocalStorage('facebook_token')
-  facebookToken: string | null;
+  @LocalStorage('accessToken')
+  accessToken: string;
 
-  @LocalStorage('access_token')
-  accessToken: string | null;
+  @LocalStorage('expiresAt')
+  expiresAt: number;
 
-  @LocalStorage('user_id')
-  userId: string | null;
+  @LocalStorage('refreshToken')
+  refreshToken: string;
+
+  @LocalStorage('userId')
+  userId: string;
 
   isLogged() {
-    return this.facebookToken !== null && this.accessToken !== null && this.userId !== null;
+    return [this.accessToken, this.expiresAt, this.refreshToken, this.userId].filter(it => it == null).length === 0;
   }
+
+  isLoggedAndExpired() {
+    return this.isLogged() && new Date(this.expiresAt).getTime() < Date.now();
+  }
+
 }

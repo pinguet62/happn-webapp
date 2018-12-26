@@ -37,6 +37,7 @@ import {MessageListHeaderComponent} from './messages/message-list-header.compone
 import {LoginService} from './login/login.service';
 import {GoogleMapsComponent} from './profile/google-maps.component';
 import {MeComponent} from './me/me.component';
+import {refreshTokenProvider} from './login/refresh-token-initializer';
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import {MeComponent} from './me/me.component';
     MeComponent,
   ],
   providers: [
+    refreshTokenProvider,
     CurrentUserService,
     LoginService,
     HappnService,
