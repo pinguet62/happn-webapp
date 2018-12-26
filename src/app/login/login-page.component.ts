@@ -11,14 +11,17 @@ import {Router} from '@angular/router';
           <ol>
             <li>
               <a
-                href="https://www.facebook.com/dialog/oauth?client_id=247294518656661&redirect_uri=https://www.happn.fr&scope=basic_info&response_type=token"
+                href="https://www.facebook.com/dialog/oauth?client_id=247294518656661&redirect_uri=fbconnect%3A%2F%2Fsuccess&scope=email%2Cuser_birthday%2Cuser_friends%2Cpublic_profile%2Cuser_photos%2Cuser_likes&response_type=token"
                 target="_blank">
-                Login with Facebook
+                Open Facebook login dialog
               </a>
             </li>
+            <li>Open <code>Network</code> tab in your browser: press <code>F12</code> key</li>
+            <li>Validate Facebook authentication, by clicking on <code>OK</code> button</li>
+            <li>In <code>Network</code> tab, open <code>confirm</code> call</li>
             <li>
-              Copy <code>access_token</code> parameter from URL:<br>
-              <code>https://www.happn.com/en/#access_token=XXXXX&expires_in=5183805</code>
+              In <code>Response</code> sub-tab, copy <code>access_token</code> value:<br>
+              <i>Example: <code>success#access_token=XXXXX&expires_in</code> copy <code>XXXXX</code> value</i>
             </li>
             <li>
               <mat-form-field style="width: 100%;">
@@ -27,7 +30,7 @@ import {Router} from '@angular/router';
                   [(ngModel)]="token" name="token"
                   #tokenModel="ngModel"
                   required
-                  placeholder="Facebook token"
+                  placeholder="Access token"
                   matInput>
               </mat-form-field>
             </li>
