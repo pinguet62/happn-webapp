@@ -1,6 +1,5 @@
+/// <reference path="../../../node_modules/@types/googlemaps/index.d.ts"/>
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
-// noinspection ES6UnusedImports
-import {} from '@types/googlemaps';
 import Circle = google.maps.Circle;
 import LatLng = google.maps.LatLng;
 import Map = google.maps.Map;
